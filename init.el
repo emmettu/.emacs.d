@@ -33,12 +33,22 @@
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
     :init
+    (setq sml/theme 'respectful)
     (setq sml/no-confirm-load-theme t)
     (sml/setup)))
 
 (defun setup-theme ()
+  (if window-system
+      (load-window-theme)
+    (load-terminal-theme)))
+
+(defun load-window-theme ()
   (use-package solarized-theme
     :init (load-theme 'solarized-dark t)))
+
+(defun load-terminal-theme ()
+  (use-package monokai-theme
+    :init (load-theme 'monokai t)))
 
 (defun setup-line-numbers ()
   (use-package nlinum-relative
