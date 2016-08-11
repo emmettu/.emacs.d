@@ -27,7 +27,8 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (setup-theme)
-  (setup-smart-modeline))
+  (setup-smart-modeline)
+  (setup-line-numbers))
 
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
@@ -38,6 +39,17 @@
 (defun setup-theme ()
   (use-package solarized-theme
     :init (load-theme 'solarized-dark t)))
+
+(defun setup-line-numbers ()
+  (use-package nlinum-relative
+    :init
+    (nlinum-relative-setup-evil)
+    (set-face-attribute 'nlinum-relative-current-face nil
+			:inherit 'linum
+			:foreground nil
+			:background nil)
+    (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+    (add-hook 'text-mode-hook 'nlinum-relative-mode)))
 
 (defun setup-evil ()
   (use-package key-chord)
