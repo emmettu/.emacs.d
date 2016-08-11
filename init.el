@@ -20,6 +20,8 @@
 
 (defun prettify ()
   (set-face-attribute 'default nil :height 100)
+  (setq inhibit-splash-screen t)
+  (setq inhibit-startup-message t)
   (global-visual-line-mode)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -91,7 +93,6 @@
 
 (defun setup-company ()
   (use-package company
-    :defer t
     :config (global-company-mode)))
 
 (defun setup-haskell ()
