@@ -73,6 +73,7 @@
 (defun add-leader-bindings ()
   (evil-leader/set-key "x" 'helm-M-x)
   (evil-leader/set-key "f" 'helm-find-files)
+  (evil-leader/set-key "g" 'magit-status)
   (evil-leader/set-key "F" 'helm-recentf)
   (evil-leader/set-key "b" 'helm-mini)
   (evil-leader/set-key "a" 'org-agenda)
@@ -116,12 +117,20 @@
     :config
     (add-hook 'haskell-mode-hook 'interactive-haskell-mode)))
 
+(defun setup-magit ()
+  (use-package magit
+    :commands (magit-status)
+    :config
+    (global-auto-revert-mode t)
+    (use-package evil-magit)))
+
 (defun install-plugins ()
   (setup-evil)
   (setup-yasnippets)
   (setup-helm)
   (setup-projectile)
   (setup-company)
-  (setup-haskell))
+  (setup-haskell)
+  (setup-magit))
 
 (go-go-emacs)
