@@ -19,13 +19,8 @@
   (setq use-package-always-ensure t))
 
 (defun prettify ()
-  ;; Improve the look of emacs
-
-  ;; Shrink font
   (set-face-attribute 'default nil :height 100)
-  ;; Smart line breaking
   (global-visual-line-mode)
-  ;; Remove GUI things
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
@@ -55,7 +50,24 @@
     (setq-default evil-escape-key-sequence "jk")))
 
 (defun setup-evil-leader ()
-  (use-package evil-leader))
+  (use-package evil-leader
+    :init
+    (global-evil-leader-mode)
+    (evil-leader/set-leader "<SPC>")
+    (add-leader-bindings)))
+
+(defun add-leader-bindings ()
+  (evil-leader/set-key "x" 'helm-M-x)
+  (evil-leader/set-key "f" 'helm-find-files)
+  (evil-leader/set-key "F" 'helm-recentf)
+  (evil-leader/set-key "b" 'helm-mini)
+  (evil-leader/set-key "a" 'org-agenda)
+  (evil-leader/set-key "s" 'save-buffer)
+  (evil-leader/set-key "k" 'kill-buffer)
+  (evil-leader/set-key "x" 'helm-M-x)
+  (evil-leader/set-key "0" 'delete-window)
+  (evil-leader/set-key "1" 'delete-other-windows)
+  (evil-leader/set-key "o" 'other-window))
 
 (defun setup-helm ()
   (use-package helm
