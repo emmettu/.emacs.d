@@ -90,7 +90,7 @@
     (define-key helm-map (kbd "C-k") #'helm-previous-line)
     (define-key helm-map (kbd "C-j") #'helm-next-line)
     (define-key helm-find-files-map (kbd "C-h") #'helm-find-files-up-one-level)
-    (define-key helm-find-files-map (kbd "C-l") 'nil)
+    (define-key helm-find-files-map (kbd "C-l") nil)
     (define-key helm-map (kbd "C-l") #'helm-execute-persistent-action)))
 
 (defun setup-projectile ()
@@ -105,7 +105,10 @@
 
 (defun setup-company ()
   (use-package company
-    :config (global-company-mode)))
+    :config
+    (global-company-mode)
+    (evil-define-key 'insert company-mode-map (kbd "C-j") 'company-select-next)
+    (evil-define-key 'insert company-mode-map (kbd "C-k") 'company-select-previous)))
 
 (defun setup-haskell ()
   (use-package haskell-mode
