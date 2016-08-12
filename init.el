@@ -105,6 +105,7 @@
   (evil-leader/set-key "b" 'helm-mini)
   (evil-leader/set-key "a" 'org-agenda)
   (evil-leader/set-key "s" 'save-buffer)
+  (evil-leader/set-key "e" 'eshell)
   (evil-leader/set-key "k" 'kill-buffer)
   (evil-leader/set-key "x" 'helm-M-x)
   (evil-leader/set-key "0" 'delete-window)
