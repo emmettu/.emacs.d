@@ -27,8 +27,7 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (setup-theme)
-  (setup-smart-modeline)
-  (setup-line-numbers))
+  (setup-smart-modeline))
 
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
@@ -52,7 +51,18 @@
   (use-package monokai-theme
     :init (load-theme 'monokai t)))
 
-(defun setup-line-numbers ()
+(defun setup-evil ()
+  (use-package key-chord)
+  (use-package evil
+    :init
+    (evil-mode 1)
+    (key-chord-mode 1)
+    (setq-default evil-escape-key-sequence "jk"))
+  (setup-relative-line-numbers)
+  (setup-evil-escape)
+  (setup-evil-leader))
+
+(defun setup-relative-line-numbers ()
   (use-package nlinum-relative
     :init
     (nlinum-relative-setup-evil)
@@ -63,24 +73,18 @@
     (add-hook 'prog-mode-hook 'nlinum-relative-mode)
     (add-hook 'text-mode-hook 'nlinum-relative-mode)))
 
-(defun setup-evil ()
-  (use-package key-chord)
-  (use-package evil-escape)
-  (setup-evil-leader)
-  (use-package evil
-    :init
-    (evil-mode 1)
-    (key-chord-mode 1)
-    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-    (evil-escape-mode)
-    (setq-default evil-escape-key-sequence "jk")))
-
 (defun setup-evil-leader ()
   (use-package evil-leader
     :init
     (global-evil-leader-mode)
     (evil-leader/set-leader "<SPC>")
     (add-leader-bindings)))
+
+(defun setup-evil-escape ()
+  (use-package evil-escape
+    :init
+    (evil-escape-mode)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)))
 
 (defun add-leader-bindings ()
   (evil-leader/set-key "x" 'helm-M-x)
