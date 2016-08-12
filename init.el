@@ -186,6 +186,41 @@
     :commands (persp-switch)
     :init (persp-mode)))
 
+(defun setup-circe ()
+  (use-package circe
+    :commands (circe)
+    :config
+    (set-channels)
+    (circe-prettify)
+    (circe-enable-logging)))
+
+(defun set-channels ()
+  (setq circe-network-options
+	'(("Freenode"
+	   :nick "emmettu"
+	   :realname "Emmett Underhill"
+	   :channels ("#izverifier" "#haskell" "#emacs"))
+	  ("vanaltj"
+	   :nick "emmettu"
+	   :realname "Emmett Underhill"
+	   :host "irc.vanaltj.com"
+	   :port "6667"
+	   :channels ("#botland" "#oldterns")))))
+
+(defun circe-prettify ()
+  (setq circe-reduce-lurker-spam t)
+  (enable-circe-color-nicks)
+  (setq circe-color-nicks-everywhere t))
+
+(defun circe-enable-logging ()
+  (load "lui-logging" nil t)
+  (enable-lui-logging-globally))
+
+(defun irc ()
+  (interactive)
+  (circe "Freenode")
+  (circe "vanaltj"))
+
 (defun install-plugins ()
   (setup-evil)
   (setup-yasnippets)
@@ -195,7 +230,8 @@
   (setup-haskell)
   (setup-magit)
   (setup-shells)
-  (setup-persp))
+  (setup-persp)
+  (setup-circe))
 
 (defun set-global-bindings ()
   (global-set-key (kbd "M-h") 'evil-window-left)
