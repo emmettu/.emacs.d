@@ -136,6 +136,31 @@
     (global-auto-revert-mode t)
     (use-package evil-magit)))
 
+(defun setup-shells ()
+  (use-package eshell
+    :commands (eshell)
+    :init (setup-eshell)))
+
+(defun setup-eshell ()
+  (setq
+   eshell-buffer-shorthand t
+   eshell-cmpl-ignore-case t
+   eshell-cmpl-cycle-completions nil
+   eshell-history-size 10000
+   eshell-hist-ignoredups t
+   eshell-error-if-no-glob t
+   eshell-glob-case-insensitive t
+   eshell-scroll-to-bottom-on-input 'all)
+
+  (add-hook 'eshell-mode-hook
+	    (lambda ()
+	      (eshell-cmpl-initialize)
+	      (setup-eshell-keybindings))))
+
+(defun setup-eshell-keybindings ()
+  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history))
+
 (defun install-plugins ()
   (setup-evil)
   (setup-yasnippets)
@@ -143,6 +168,7 @@
   (setup-projectile)
   (setup-company)
   (setup-haskell)
-  (setup-magit))
+  (setup-magit)
+  (setup-shells))
 
 (go-go-emacs)
