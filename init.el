@@ -94,6 +94,7 @@
   (evil-leader/set-key "x" 'helm-M-x)
   (evil-leader/set-key "0" 'delete-window)
   (evil-leader/set-key "1" 'delete-other-windows)
+  (evil-leader/set-key "w" 'persp-switch)
   (evil-leader/set-key "o" 'other-window))
 
 (defun setup-helm ()
@@ -161,6 +162,11 @@
   (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
   (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history))
 
+(defun setup-persp ()
+  (use-package persp-mode
+    :commands (persp-switch)
+    :init (persp-mode)))
+
 (defun install-plugins ()
   (setup-evil)
   (setup-yasnippets)
@@ -169,6 +175,7 @@
   (setup-company)
   (setup-haskell)
   (setup-magit)
-  (setup-shells))
+  (setup-shells)
+  (setup-persp))
 
 (go-go-emacs)
