@@ -35,6 +35,7 @@
   (use-package smart-mode-line
     :init
     (display-time-mode 1)
+    (setq rm-whitelist " #")
     (add-hook 'prog-mode-hook 'column-number-mode)
     (setq sml/theme 'respectful)
     (setq sml/no-confirm-load-theme t)
