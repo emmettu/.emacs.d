@@ -2,7 +2,8 @@
   (setup-package-management)
   (bootstrap-use-package)
   (prettify)
-  (install-plugins))
+  (install-plugins)
+  (set-global-bindings))
 
 (defun setup-package-management ()
   (require 'package)
@@ -183,5 +184,11 @@
   (setup-magit)
   (setup-shells)
   (setup-persp))
+
+(defun set-global-bindings ()
+  (global-set-key (kbd "M-h") 'evil-window-left)
+  (global-set-key (kbd "M-j") 'evil-window-down)
+  (global-set-key (kbd "M-k") 'evil-window-up)
+  (global-set-key (kbd "M-l") 'evil-window-right))
 
 (go-go-emacs)
