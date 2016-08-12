@@ -104,6 +104,7 @@
   (evil-leader/set-key "g" 'magit-status)
   (evil-leader/set-key "F" 'helm-recentf)
   (evil-leader/set-key "b" 'helm-mini)
+  (evil-leader/set-key "p" 'helm-projectile)
   (evil-leader/set-key "a" 'org-agenda)
   (evil-leader/set-key "s" 'save-buffer)
   (evil-leader/set-key "e" 'eshell)
