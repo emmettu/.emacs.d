@@ -78,6 +78,8 @@
     :init
     (global-evil-leader-mode)
     (evil-leader/set-leader "<SPC>")
+    (setq evil-leader/in-all-states t)
+    (setq evil-leader/non-normal-prefix "C-")
     (add-leader-bindings)))
 
 (defun setup-evil-escape ()
