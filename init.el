@@ -28,7 +28,8 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (setup-theme)
-  (setup-smart-modeline))
+  (setup-smart-modeline)
+  (show-trailing-whitespace))
 
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
@@ -51,6 +52,13 @@
 (defun load-terminal-theme ()
   (use-package monokai-theme
     :init (load-theme 'monokai t)))
+
+(defun show-trailing-whitespace ()
+  (add-hook 'text-mode-hook 'set-trailing-whitespace)
+  (add-hook 'prog-mode-hook 'set-trailing-whitespace))
+
+(defun set-trailing-whitespace ()
+  (setq show-trailing-whitespace t))
 
 (defun setup-evil ()
   (use-package key-chord)
