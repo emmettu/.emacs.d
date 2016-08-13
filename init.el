@@ -191,7 +191,8 @@
     :config
     (set-channels)
     (circe-prettify)
-    (circe-enable-logging))
+    (circe-enable-logging)
+    (setq lui-flyspell-p t))
   (use-package helm-circe))
 
 (defun set-channels ()
