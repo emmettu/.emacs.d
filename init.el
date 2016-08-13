@@ -67,7 +67,7 @@
     :init
     (evil-mode 1)
     (key-chord-mode 1)
-    (setq-default evil-escape-key-sequence "jk"))
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
   (setup-relative-line-numbers)
   (setup-evil-escape)
   (setup-evil-leader))
@@ -96,7 +96,7 @@
   (use-package evil-escape
     :init
     (evil-escape-mode)
-    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)))
+    (setq-default evil-escape-key-sequence "jk")))
 
 (defun add-leader-bindings ()
   (evil-leader/set-key "x" 'helm-M-x)
