@@ -191,7 +191,8 @@
     :config
     (set-channels)
     (circe-prettify)
-    (circe-enable-logging)))
+    (circe-enable-logging))
+  (use-package helm-circe))
 
 (defun set-channels ()
   (setq circe-network-options
