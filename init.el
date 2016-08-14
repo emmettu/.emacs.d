@@ -47,8 +47,8 @@
     (load-terminal-theme)))
 
 (defun load-window-theme ()
-  (use-package solarized-theme
-    :init (load-theme 'solarized-dark t)))
+  (use-package dracula-theme
+    :init (load-theme 'dracula t)))
 
 (defun load-terminal-theme ()
   (use-package monokai-theme
