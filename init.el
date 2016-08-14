@@ -139,6 +139,7 @@
   (use-package company
     :config
     (global-company-mode)
+    (setq company-idle-delay 0)
     (evil-define-key 'insert company-mode-map (kbd "C-j") 'company-select-next)
     (evil-define-key 'insert company-mode-map (kbd "C-k") 'company-select-previous)))
 
