@@ -293,7 +293,18 @@
   (setup-shells)
   (setup-persp)
   (setup-circe)
-  (setup-mu4e))
+  (setup-mu4e)
+  (setup-writeroom))
+
+(defun setup-writeroom ()
+  (use-package writeroom-mode
+    :commands (writeroom-mode)
+    :init
+    (add-hook 'text-mode-hook 'writeroom-mode)
+    :config
+    (add-hook 'text-mode-hook 'writeroom-mode)
+    (add-hook 'text-mode-hook 'auto-fill-mode)
+    (add-hook 'text-mode-hook 'flyspell-mode)))
 
 (defun set-global-bindings ()
   (global-set-key (kbd "M-h") 'evil-window-left)
