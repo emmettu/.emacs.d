@@ -78,7 +78,8 @@
     (nlinum-relative-setup-evil)
     (set-face-attribute 'nlinum-relative-current-face nil
 			:inherit 'linum
-			:foreground nil
+			:foreground "yellow"
+			:weight 'normal
 			:background nil)
     (add-hook 'prog-mode-hook 'nlinum-relative-mode)
     (add-hook 'text-mode-hook 'nlinum-relative-mode)))
