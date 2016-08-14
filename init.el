@@ -299,13 +299,11 @@
 
 (defun setup-writeroom ()
   (use-package writeroom-mode
-    :commands (writeroom-mode)
-    :init
-    (add-hook 'text-mode-hook 'writeroom-mode)
+    :mode "\\.txt\\'"
     :config
-    (add-hook 'text-mode-hook 'writeroom-mode)
-    (add-hook 'text-mode-hook 'auto-fill-mode)
-    (add-hook 'text-mode-hook 'flyspell-mode)))
+    (writeroom-mode)
+    (auto-fill-mode)
+    (flyspell-mode)))
 
 (defun set-global-bindings ()
   (global-set-key (kbd "M-h") 'evil-window-left)
