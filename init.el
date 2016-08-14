@@ -267,21 +267,17 @@
    mu4e-compose-signature "Emmett Underhill")
 
   (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
-   ;; sending mail -- replace USERNAME with your gmail username
-   ;; also, make sure the gnutls command line utils are installed
-   ;; package 'gnutls-bin' in Debian/Ubuntu
+  (setup-smtp)
+  (setq message-kill-buffer-on-exit t))
 
+(defun setup-smtp ()
    (use-package smtpmail
      :init
-     ;; alternatively, for emacs-24 you can use:
      (setq message-send-mail-function 'smtpmail-send-it
 	   smtpmail-stream-type 'starttls
 	   smtpmail-default-smtp-server "smtp.gmail.com"
 	   smtpmail-smtp-server "smtp.gmail.com"
-	   smtpmail-smtp-service 587))
-
-   ;; don't keep message buffers around
-   (setq message-kill-buffer-on-exit t))
+	   smtpmail-smtp-service 587)))
 
 (defun install-plugins ()
   (setup-evil)
