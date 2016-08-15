@@ -3,7 +3,8 @@
   (bootstrap-use-package)
   (prettify)
   (install-plugins)
-  (set-global-bindings))
+  (set-global-bindings)
+  (sane-itize-defaults))
 
 (defun setup-package-management ()
   (require 'package)
@@ -155,7 +156,6 @@
   (use-package magit
     :commands (magit-status)
     :config
-    (global-auto-revert-mode t)
     (use-package evil-magit)))
 
 (defun setup-shells ()
@@ -308,5 +308,19 @@
   (global-set-key (kbd "M-j") 'evil-window-down)
   (global-set-key (kbd "M-k") 'evil-window-up)
   (global-set-key (kbd "M-l") 'evil-window-right))
+
+(defun sane-itize-defaults ()
+  (global-auto-revert-mode t)
+  (setq auto-revert-verbose nil)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq-default fill-column 80)
+  (setq recentf-max-saved-items 50)
+  (savehist-mode 1)
+  (setq history-length 1000)
+  (winner-mode 1)
+  (global-subword-mode)
+  (use-package smooth-scrolling
+    :init (smooth-scrolling-mode))
+  (setq enable-recursive-minibuffers))
 
 (go-go-emacs)
