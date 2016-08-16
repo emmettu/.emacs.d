@@ -73,7 +73,8 @@
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
   (setup-relative-line-numbers)
   (setup-evil-escape)
-  (setup-evil-leader))
+  (setup-evil-leader)
+  (setup-evil-commentary))
 
 (defun setup-relative-line-numbers ()
   (use-package nlinum-relative
@@ -101,6 +102,10 @@
     :init
     (evil-escape-mode)
     (setq-default evil-escape-key-sequence "jk")))
+
+(defun setup-evil-commentary ()
+  (use-package evil-commentary
+    :init (evil-commentary-mode)))
 
 (defun add-leader-bindings ()
   (evil-leader/set-key "x" 'helm-M-x)
