@@ -12,6 +12,8 @@
 
   (add-to-list 'package-archives
 	       '("melpa" . "https://melpa.org/packages/") t)
+  (add-to-list 'package-archives
+	       '("melpa-mirror" . "https://elpa.zilongshanren.com/melpa/") t)
   (package-initialize))
 
 (defun bootstrap-use-package ()
