@@ -41,7 +41,8 @@
     (add-hook 'prog-mode-hook 'column-number-mode)
     (setq sml/theme 'respectful)
     (setq sml/no-confirm-load-theme t)
-    (sml/setup)))
+    (sml/setup)
+    (add-to-list 'sml/replacer-regexp-list '("^~/workspace/" ":WRK:") t)))
 
 (defun setup-theme ()
   (if window-system
