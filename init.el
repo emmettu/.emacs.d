@@ -189,7 +189,9 @@
 
 (defun setup-eshell-keybindings ()
   (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
-  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history))
+  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history)
+  (evil-define-key 'insert eshell-mode-map (kbd "C-j") 'eshell-next-matching-input-from-input)
+  (evil-define-key 'insert eshell-mode-map (kbd "C-k") 'eshell-previous-matching-input-from-input))
 
 (defun setup-persp ()
   (use-package persp-mode
