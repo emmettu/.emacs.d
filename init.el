@@ -102,6 +102,7 @@
 
 (defun add-leader-bindings ()
   (evil-leader/set-key "x" 'helm-M-x)
+  (evil-leader/set-key "/" 'helm-occur)
   (evil-leader/set-key "f" 'helm-find-files)
   (evil-leader/set-key "g" 'magit-status)
   (evil-leader/set-key "F" 'helm-recentf)
