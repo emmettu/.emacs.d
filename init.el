@@ -30,7 +30,8 @@
   (scroll-bar-mode -1)
   (setup-theme)
   (setup-smart-modeline)
-  (show-trailing-whitespace))
+  (show-trailing-whitespace)
+  (setq uniquify-buffer-name-style 'post-forward))
 
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
