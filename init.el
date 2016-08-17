@@ -48,13 +48,20 @@
     (add-to-list 'sml/replacer-regexp-list '("^~/workspace/" ":WRK:") t)))
 
 (defun setup-theme ()
-  (if window-system
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions 'do-setup-theme)
+    (do-setup-theme)))
+
+(defun do-setup-theme (&optional frame)
+  (when frame
+    (select-frame frame))
+  (if (display-graphic-p)
       (load-window-theme)
     (load-terminal-theme)))
 
 (defun load-window-theme ()
-  (use-package dracula-theme
-    :init (load-theme 'dracula t)))
+  (use-package tao-theme
+    :init (load-theme 'tao-yin t)))
 
 (defun load-terminal-theme ()
   (use-package monokai-theme
