@@ -134,7 +134,12 @@
   (evil-leader/set-key "x" 'helm-M-x)
   (evil-leader/set-key "0" 'delete-window)
   (evil-leader/set-key "1" 'delete-other-windows)
-  (evil-leader/set-key "w" 'persp-switch)
+  (evil-leader/set-key "ww" 'eyebrowse-create-window-config)
+  (evil-leader/set-key "wr" 'eyebrowse-rename-window-config)
+  (evil-leader/set-key "ws" 'eyebrowse-switch-to-window-config)
+  (evil-leader/set-key "wl" 'eyebrowse-next-window-config)
+  (evil-leader/set-key "wh" 'eyebrowse-prev-window-config)
+  (evil-leader/set-key "wp" 'eyebrowse-last-window-config)
   (evil-leader/set-key "o" 'other-window))
 
 (defun setup-helm ()
@@ -205,10 +210,12 @@
   (evil-define-key 'insert eshell-mode-map (kbd "C-j") 'eshell-next-matching-input-from-input)
   (evil-define-key 'insert eshell-mode-map (kbd "C-k") 'eshell-previous-matching-input-from-input))
 
-(defun setup-persp ()
-  (use-package persp-mode
-    :commands (persp-switch)
-    :init (persp-mode)))
+(defun setup-eyebrowse ()
+  (use-package eyebrowse
+    :init
+    (eyebrowse-mode)
+    (eyebrowse-setup-evil-keys)
+    (eyebrowse-setup-opinionated-keys)))
 
 (defun setup-circe ()
   (use-package circe
@@ -312,7 +319,7 @@
   (setup-haskell)
   (setup-magit)
   (setup-shells)
-  (setup-persp)
+  (setup-eyebrowse)
   (setup-circe)
   (setup-mu4e)
   (setup-writeroom))
