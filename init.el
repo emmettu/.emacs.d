@@ -104,7 +104,8 @@
   (use-package evil-escape
     :init
     (evil-escape-mode)
-    (setq-default evil-escape-key-sequence "jk")))
+    (setq-default evil-escape-key-sequence "jk")
+    (setq-default evil-escape-unordered-key-sequence t)))
 
 (defun setup-evil-commentary ()
   (use-package evil-commentary
