@@ -80,16 +80,17 @@
   (setup-evil-commentary))
 
 (defun setup-relative-line-numbers ()
-  (use-package nlinum-relative
+  (use-package linum-relative
     :init
-    (nlinum-relative-setup-evil)
-    (set-face-attribute 'nlinum-relative-current-face nil
+    (linum-relative-mode)
+    (setq linum-relative-current-symbol "")
+    (set-face-attribute 'linum-relative-current-face nil
 			:inherit 'linum
-			:foreground "yellow"
-			:weight 'normal
+			:foreground nil
+			:weight 'bold
 			:background nil)
-    (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-    (add-hook 'text-mode-hook 'nlinum-relative-mode)))
+    (add-hook 'prog-mode-hook 'linum-relative-mode)
+    (add-hook 'text-mode-hook 'linum-relative-mode)))
 
 (defun setup-evil-leader ()
   (use-package evil-leader
