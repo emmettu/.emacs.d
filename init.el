@@ -215,7 +215,9 @@
     :init
     (eyebrowse-mode)
     (eyebrowse-setup-evil-keys)
-    (eyebrowse-setup-opinionated-keys)))
+    (eyebrowse-setup-opinionated-keys)
+    (setq eyebrowse-wrap-around t)
+    (setq eyebrowse-switch-back-and-forth t)))
 
 (defun setup-circe ()
   (use-package circe
