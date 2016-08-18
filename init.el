@@ -336,7 +336,9 @@
   (global-set-key (kbd "M-h") 'evil-window-left)
   (global-set-key (kbd "M-j") 'evil-window-down)
   (global-set-key (kbd "M-k") 'evil-window-up)
-  (global-set-key (kbd "M-l") 'evil-window-right))
+  (global-set-key (kbd "M-l") 'evil-window-right)
+  (global-set-key (kbd "<C-iso-lefttab>") 'evil-prev-buffer)
+  (global-set-key (kbd "<C-tab>") 'evil-prev-buffer))
 
 (defun sane-itize-defaults ()
   (global-auto-revert-mode t)
