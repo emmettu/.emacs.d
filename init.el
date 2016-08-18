@@ -322,7 +322,8 @@
   (setup-eyebrowse)
   (setup-circe)
   (setup-mu4e)
-  (setup-writeroom))
+  (setup-writeroom)
+  (setup-popwin))
 
 (defun setup-writeroom ()
   (use-package writeroom-mode
@@ -331,6 +332,14 @@
     (writeroom-mode)
     (auto-fill-mode)
     (flyspell-mode)))
+
+(defun setup-popwin ()
+  (use-package popwin
+    :config
+    (popwin-mode)
+    (push "*Shell Command Output*" popwin:special-display-config)
+    (push "*Warnings*" popwin:special-display-config)))
+
 
 (defun set-global-bindings ()
   (global-set-key (kbd "M-h") 'evil-window-left)
