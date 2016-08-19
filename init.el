@@ -317,6 +317,7 @@
   (setup-projectile)
   (setup-company)
   (setup-haskell)
+  (setup-python)
   (setup-magit)
   (setup-shells)
   (setup-eyebrowse)
@@ -340,13 +341,24 @@
     (push "*Shell Command Output*" popwin:special-display-config)
     (push "*Warnings*" popwin:special-display-config)))
 
+(defun setup-python ()
+  (use-package python
+    :mode ("\\.py\\'" . python-mode)
+    :interpreter ("python" . python-mode)
+    :config
+    (setup-elpy)))
+
+(defun setup-elpy ()
+  (use-package elpy
+    :init
+    (elpy-enable)))
 
 (defun set-global-bindings ()
   (global-set-key (kbd "M-h") 'evil-window-left)
   (global-set-key (kbd "M-j") 'evil-window-down)
   (global-set-key (kbd "M-k") 'evil-window-up)
   (global-set-key (kbd "M-l") 'evil-window-right)
-  (global-set-key (kbd "<C-iso-lefttab>") 'evil-prev-buffer)
+  (global-set-key (kbd "<C-iso-lefttab>") 'evil-next-buffer)
   (global-set-key (kbd "<C-tab>") 'evil-prev-buffer))
 
 (defun sane-itize-defaults ()
