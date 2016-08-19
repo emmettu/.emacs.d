@@ -361,8 +361,13 @@
   (setq history-length 1000)
   (winner-mode 1)
   (global-subword-mode)
+  (setq enable-recursive-minibuffers)
+  (setup-smooth-scrolling))
+
+(defun setup-smooth-scrolling ()
   (use-package smooth-scrolling
-    :init (smooth-scrolling-mode))
-  (setq enable-recursive-minibuffers))
+    :init
+    (smooth-scrolling-mode)
+    (setq smooth-scroll-margin 1)))
 
 (go-go-emacs)
