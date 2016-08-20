@@ -58,8 +58,8 @@
     (load-terminal-theme)))
 
 (defun load-window-theme ()
-  (use-package tao-theme
-    :init (load-theme 'tao-yin t)))
+  (use-package dracula-theme
+    :init (load-theme 'dracula t)))
 
 (defun load-terminal-theme ()
   (use-package monokai-theme
@@ -91,8 +91,8 @@
     (setq linum-relative-current-symbol "")
     (set-face-attribute 'linum-relative-current-face nil
 			:inherit 'linum
-			:foreground nil
-			:weight 'bold
+			:foreground "yellow"
+			:weight 'normal
 			:background nil)
     (add-hook 'prog-mode-hook 'linum-relative-mode)
     (add-hook 'text-mode-hook 'linum-relative-mode)))
