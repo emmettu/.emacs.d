@@ -157,11 +157,13 @@
 
 (defun setup-yasnippets ()
   (use-package yasnippet
-    :init
+    :defer 3
+    :config
     (yas-global-mode 1)))
 
 (defun setup-company ()
   (use-package company
+    :defer 3
     :config
     (global-company-mode)
     (define-key company-active-map [tab] 'company-select-next)
