@@ -9,7 +9,6 @@
 (defun setup-package-management ()
   (require 'package)
   (setq package-enable-at-startup nil)
-
   (add-to-list 'package-archives
 	       '("melpa" . "https://melpa.org/packages/") t)
   (package-initialize))
@@ -59,8 +58,8 @@
     (load-terminal-theme)))
 
 (defun load-window-theme ()
-  (use-package dracula-theme
-    :init (load-theme 'dracula t)))
+  (use-package tao-theme
+    :init (load-theme 'tao-yin t)))
 
 (defun load-terminal-theme ()
   (use-package monokai-theme
@@ -92,7 +91,7 @@
     (setq linum-relative-current-symbol "")
     (set-face-attribute 'linum-relative-current-face nil
 			:inherit 'linum
-			:foreground "yellow"
+			:foreground "white"
 			:weight 'normal
 			:background nil)
     (add-hook 'prog-mode-hook 'linum-relative-mode)
@@ -162,6 +161,16 @@
     :config
     (yas-global-mode 1)))
 
+(defun setup-flycheck ()
+  (use-package flycheck
+    :defer 3
+    :init
+    :config
+    (setq exec-path (append exec-path '("~/.cargo/bin")))
+    (setenv "PATH" (concat (getenv "PATH") ":/home/emmett/.cargo/bin"))
+    (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
+    (global-flycheck-mode)))
+
 (defun setup-company ()
   (use-package company
     :defer 3
@@ -171,6 +180,16 @@
     (define-key company-active-map (kbd "TAB") 'company-select-next)
     (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
     (setq company-idle-delay 0.2)))
+
+(defun setup-cpp ()
+  (use-package cc-mode
+    :mode
+    ("\\.cpp\\'" . c++-mode)
+    ("\\.h\\'" . c++-mode)
+    :config
+    (use-package company-irony)
+    (add-to-list 'company-backends 'company-irony)
+    (flycheck-irony-setup)))
 
 (defun setup-haskell ()
   (use-package haskell-mode
@@ -236,6 +255,12 @@
 	   :nick "emmettu"
 	   :realname "Emmett Underhill"
 	   :channels ("#izverifier" "#haskell" "#emacs"))
+	  ("RHAT"
+	   :nick "eunderhi"
+	   :realname "Emmett Underhill"
+	   :host "irc.devel.redhat.com"
+	   :port "6667"
+	   :channels ("#eapintern" "#eapto" "#essc" "#internTO" "#internTO2015" "#jboss" "#thefoobar" "#jbossas" "#prod" "#jbossqa" "#projectncl" "#soancl" "#toronto" "#rel-eng"))
 	  ("vanaltj"
 	   :nick "emmettu"
 	   :realname "Emmett Underhill"
@@ -254,55 +279,12 @@
 
 (defun irc ()
   (interactive)
-  (circe "Freenode")
+  ;(circe "Freenode")
+  (circe "RHAT")
   (circe "vanaltj"))
 
-(defun setup-mu4e ()
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-  (use-package mu4e
-  :ensure nil
-    :commands (mu4e)
-    :config
-    (mu4e-init)))
-
-(defun mu4e-init ()
-  ;; default
-  (setq mu4e-maildir "~/.mail/gmail")
-
-  (setq mu4e-drafts-folder "/[Gmail]/.Drafts")
-  (setq mu4e-sent-folder   "/[Gmail]/.Sent Mail")
-  (setq mu4e-trash-folder  "/[Gmail]/.Trash")
-
-  ;; don't save message to Sent Messages, Gmail/IMAP takes care of this
-  (setq mu4e-sent-messages-behavior 'delete)
-
-  ;; (See the documentation for `mu4e-sent-messages-behavior' if you have
-  ;; additional non-Gmail addresses and want assign them different
-  ;; behavior.)
-
-  ;; setup some handy shortcuts
-  ;; you can quickly switch to your Inbox -- press ``ji''
-  ;; then, when you want archive some messages, move them to
-  ;; the 'All Mail' folder by pressing ``ma''.
-
-  (setq mu4e-maildir-shortcuts
-	'( ("/INBOX"               . ?i)
-	   ("/[Gmail]/.Sent Mail"   . ?s)
-	   ("/[Gmail]/.Trash"       . ?t)
-	   ("/[Gmail]/.All Mail"    . ?a)))
-
-  ;; allow for updating mail using 'U' in the main view:
-  (setq mu4e-get-mail-command "mbsync gmail")
-
-  ;; something about ourselves
-  (setq
-   user-mail-address "eunderhi@ualberta.ca"
-   user-full-name  "Emmett Underhill"
-   mu4e-compose-signature "Emmett Underhill")
-
-  (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
-  (setup-smtp)
-  (setq message-kill-buffer-on-exit t))
+(defun setup-notmuch ()
+  (use-package notmuch))
 
 (defun setup-smtp ()
    (use-package smtpmail
@@ -316,32 +298,33 @@
 (defun install-plugins ()
   (setup-evil)
   (setup-yasnippets)
+  (setup-flycheck)
   (setup-helm)
   (setup-projectile)
   (setup-company)
+  (setup-ranger)
   (setup-haskell)
+  (setup-cpp)
   (setup-python)
+  (setup-rust)
   (setup-magit)
   (setup-shells)
   (setup-eyebrowse)
   (setup-circe)
-  (setup-mu4e)
-  (setup-writeroom)
+  (setup-notmuch)
   (setup-popwin))
 
-(defun setup-writeroom ()
-  (use-package writeroom-mode
-    :mode "\\.txt\\'"
-    :config
-    (writeroom-mode)
-    (auto-fill-mode)
-    (flyspell-mode)))
+(defun setup-ranger ()
+  (use-package ranger
+    :init
+    (ranger-override-dired-mode t)
+    (add-to-list 'evil-emacs-state-modes 'ranger-mode)))
 
 (defun setup-popwin ()
   (use-package popwin
     :config
     (popwin-mode)
-    (push "*Shell Command Output*" popwin:special-display-config)
+    (push "*shell command Output*" popwin:special-display-config)
     (push "*Warnings*" popwin:special-display-config)))
 
 (defun setup-python ()
@@ -350,6 +333,20 @@
     :interpreter ("python" . python-mode)
     :config
     (setup-elpy)))
+
+(defun setup-rust ()
+  (use-package rust-mode
+    :mode ("\\.rs\\'" . rust-mode)
+    :init
+    (use-package flycheck-rust)
+    (use-package cargo)
+    (use-package racer)
+    (add-hook 'rust-mode-hook 'racer-mode)
+    (add-hook 'racer-mode-hook 'eldoc-mode)
+    (add-hook 'racer-mode-hook 'company-mode)
+    (setenv "RUST_SRC_PATH" (concat (getenv "PATH") ":/home/emmett/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src/"))
+    :config
+    (cargo-minor-mode)))
 
 (defun setup-elpy ()
   (use-package elpy
@@ -374,7 +371,7 @@
   (setq history-length 1000)
   (winner-mode 1)
   (global-subword-mode)
-  (setq enable-recursive-minibuffers)
+  (setq enable-recursive-minibuffers t)
   (setup-smooth-scrolling))
 
 (defun setup-smooth-scrolling ()
@@ -384,3 +381,17 @@
     (setq smooth-scroll-margin 1)))
 
 (go-go-emacs)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (counsel flycheck-rust cargo flycheck-irony flycheck-google-cpplint company-irony evil-magit elpy smooth-scrolling yasnippet writeroom-mode use-package smart-mode-line popwin magit linum-relative key-chord helm-projectile helm-circe haskell-mode eyebrowse evil-leader evil-escape evil-commentary dracula-theme company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
