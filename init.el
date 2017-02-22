@@ -57,8 +57,8 @@
     (load-terminal-theme)))
 
 (defun load-window-theme ()
-  (use-package tao-theme
-    :init (load-theme 'tao-yin t)))
+  (use-package doom-themes
+    :init (load-theme 'doom-one t)))
 
 (defun load-terminal-theme ()
   (use-package monokai-theme
@@ -78,6 +78,9 @@
     (evil-mode 1)
     (key-chord-mode 1)
     (key-chord-define evil-insert-state-map "jk" 'evil-normal-state))
+
+  (define-key evil-normal-state-map (kbd "H") #'evil-prev-buffer)
+  (define-key evil-normal-state-map (kbd "L") #'evil-next-buffer)
   (setup-relative-line-numbers)
   (setup-evil-escape)
   (setup-evil-leader)
@@ -126,6 +129,7 @@
   (evil-leader/set-key "a" 'org-agenda)
   (evil-leader/set-key "s" 'save-buffer)
   (evil-leader/set-key "e" 'eshell)
+  (evil-leader/set-key "t" 'shell)
   (evil-leader/set-key "r" 'deer)
   (evil-leader/set-key "k" 'kill-buffer)
   (evil-leader/set-key "0" 'delete-window)
@@ -168,8 +172,8 @@
     :defer 3
     :init
     :config
-    (setq exec-path (append exec-path '("~/.cargo/bin")))
-    (setenv "PATH" (concat (getenv "PATH") ":/home/emmett/.cargo/bin"))
+    ;(setq exec-path (append exec-path '("~/.cargo/bin")))
+    ;(setenv "PATH" (concat (getenv "PATH") ":/home/emmett/.cargo/bin"))
     (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
     (global-flycheck-mode)))
 
@@ -208,7 +212,11 @@
 (defun setup-shells ()
   (use-package eshell
     :commands (eshell)
-    :init (setup-eshell)))
+    :init (setup-eshell))
+  (setq comint-prompt-read-only t)
+  (define-key comint-mode-map (kbd "C-j") 'comint-next-input)
+  (define-key comint-mode-map (kbd "C-k") 'comint-previous-input)
+  (define-key comint-mode-map (kbd "C-r") 'counsel-shell-history))
 
 (defun setup-eshell ()
   (setq
@@ -333,6 +341,7 @@
     :mode ("\\.py\\'" . python-mode)
     :interpreter ("python" . python-mode)
     :config
+    (setq python-shell-completion-native-enable nil)
     (setup-elpy)))
 
 (defun setup-rust ()
@@ -360,7 +369,7 @@
   (global-set-key (kbd "M-k") 'evil-window-up)
   (global-set-key (kbd "M-l") 'evil-window-right)
   (global-set-key (kbd "<C-iso-lefttab>") 'evil-next-buffer)
-  (global-set-key (kbd "<C-tab>") 'evil-prev-buffer))
+  (global-set-key (kbd "<C-tab>") 'switch-to-prev-buffer))
 
 (defun sane-itize-defaults ()
   (global-auto-revert-mode t)
