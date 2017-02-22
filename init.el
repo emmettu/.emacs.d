@@ -23,7 +23,6 @@
   (set-face-attribute 'default nil :height 100)
   (setq inhibit-splash-screen t)
   (setq inhibit-startup-message t)
-  (global-visual-line-mode)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
@@ -118,18 +117,17 @@
     :init (evil-commentary-mode)))
 
 (defun add-leader-bindings ()
-  (evil-leader/set-key "x" 'helm-M-x)
-  (evil-leader/set-key "/" 'helm-occur)
-  (evil-leader/set-key "f" 'helm-find-files)
+  (evil-leader/set-key "x" 'counsel-M-x)
+  (evil-leader/set-key "f" 'counsel-find-file)
   (evil-leader/set-key "g" 'magit-status)
-  (evil-leader/set-key "F" 'helm-recentf)
-  (evil-leader/set-key "b" 'helm-mini)
-  (evil-leader/set-key "p" 'helm-projectile)
+  (evil-leader/set-key "F" 'counsel-recentf)
+  (evil-leader/set-key "b" 'ivy-switch-buffer)
+  (evil-leader/set-key "p" 'counsel-projectile)
   (evil-leader/set-key "a" 'org-agenda)
   (evil-leader/set-key "s" 'save-buffer)
   (evil-leader/set-key "e" 'eshell)
+  (evil-leader/set-key "r" 'deer)
   (evil-leader/set-key "k" 'kill-buffer)
-  (evil-leader/set-key "x" 'helm-M-x)
   (evil-leader/set-key "0" 'delete-window)
   (evil-leader/set-key "1" 'delete-other-windows)
   (evil-leader/set-key "ww" 'eyebrowse-create-window-config)
@@ -140,20 +138,24 @@
   (evil-leader/set-key "wp" 'eyebrowse-last-window-config)
   (evil-leader/set-key "o" 'other-window))
 
-(defun setup-helm ()
-  (use-package helm
-    :init
-    (helm-mode 1)
-    (define-key helm-map (kbd "C-k") #'helm-previous-line)
-    (define-key helm-map (kbd "C-j") #'helm-next-line)
-    (define-key helm-find-files-map (kbd "C-h") #'helm-find-files-up-one-level)
-    (define-key helm-find-files-map (kbd "C-l") nil)
-    (define-key helm-map (kbd "C-l") #'helm-execute-persistent-action)
-    (helm-autoresize-mode t)))
+(defun setup-ivy ()
+  (use-package ivy
+    :config
+    (ivy-mode 1)
+    (define-key ivy-mode-map (kbd "C-j") #'ivy-next-line)
+    (define-key ivy-mode-map (kbd "C-k") #'ivy-previous-line)
+    (define-key ivy-mode-map (kbd "C-l") #'ivy-alt-done)
+    (setq ivy-use-virtual-buffers t))
+  (use-package counsel
+    :config
+    (define-key counsel-find-file-map (kbd "C-h") #'counsel-up-directory))
+  (use-package swiper
+    :config
+    (define-key evil-normal-state-map (kbd "/") #'swiper)))
 
 (defun setup-projectile ()
-  (use-package helm-projectile
-    :commands (helm-projectile)))
+  (use-package counsel-projectile
+    :commands (counsel-projectile)))
 
 (defun setup-yasnippets ()
   (use-package yasnippet
@@ -225,8 +227,7 @@
 	      (setup-eshell-keybindings))))
 
 (defun setup-eshell-keybindings ()
-  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
-  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'helm-eshell-history)
+  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'counsel-esh-history)
   (evil-define-key 'insert eshell-mode-map (kbd "C-j") 'eshell-next-matching-input-from-input)
   (evil-define-key 'insert eshell-mode-map (kbd "C-k") 'eshell-previous-matching-input-from-input))
 
@@ -299,7 +300,7 @@
   (setup-evil)
   (setup-yasnippets)
   (setup-flycheck)
-  (setup-helm)
+  (setup-ivy)
   (setup-projectile)
   (setup-company)
   (setup-ranger)
