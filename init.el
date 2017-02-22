@@ -140,7 +140,9 @@
   (evil-leader/set-key "wl" 'eyebrowse-next-window-config)
   (evil-leader/set-key "wh" 'eyebrowse-prev-window-config)
   (evil-leader/set-key "wp" 'eyebrowse-last-window-config)
-  (evil-leader/set-key "o" 'other-window))
+  (evil-leader/set-key "o" 'other-window)
+  (evil-leader/set-key-for-mode 'emacs-lisp-mode "i" 'counsel-imenu)
+  (evil-leader/set-key-for-mode 'python-mode "i" 'counsel-imenu))
 
 (defun setup-ivy ()
   (use-package ivy
@@ -214,6 +216,7 @@
     :commands (eshell)
     :init (setup-eshell))
   (setq comint-prompt-read-only t)
+  (setq comint-process-echoes t)
   (define-key comint-mode-map (kbd "C-j") 'comint-next-input)
   (define-key comint-mode-map (kbd "C-k") 'comint-previous-input)
   (define-key comint-mode-map (kbd "C-r") 'counsel-shell-history))
@@ -311,6 +314,7 @@
   (setup-ivy)
   (setup-projectile)
   (setup-company)
+  (setup-dumb-jump)
   (setup-ranger)
   (setup-haskell)
   (setup-cpp)
@@ -322,6 +326,12 @@
   (setup-circe)
   (setup-notmuch)
   (setup-popwin))
+
+(defun setup-dumb-jump ()
+  (use-package dumb-jump)
+  (evil-define-key 'insert prog-mode-map (kbd "C-]") 'dumb-jump-go)
+  (evil-define-key 'normal prog-mode-map (kbd "C-]") 'dumb-jump-go)
+  (setq dumb-jump-selector 'ivy))
 
 (defun setup-ranger ()
   (use-package ranger
@@ -398,7 +408,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel flycheck-rust cargo flycheck-irony flycheck-google-cpplint company-irony evil-magit elpy smooth-scrolling yasnippet writeroom-mode use-package smart-mode-line popwin magit linum-relative key-chord helm-projectile helm-circe haskell-mode eyebrowse evil-leader evil-escape evil-commentary dracula-theme company))))
+    (monokai-theme counsel flycheck-rust cargo flycheck-irony flycheck-google-cpplint company-irony evil-magit elpy smooth-scrolling yasnippet writeroom-mode use-package smart-mode-line popwin magit linum-relative key-chord helm-projectile helm-circe haskell-mode eyebrowse evil-leader evil-escape evil-commentary dracula-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
