@@ -21,6 +21,7 @@
 
 (defun prettify ()
   (set-face-attribute 'default nil :height 100)
+  (set-default-font "Hack")
   (setq inhibit-splash-screen t)
   (setq inhibit-startup-message t)
   (menu-bar-mode -1)
@@ -125,7 +126,11 @@
   (evil-leader/set-key "g" 'magit-status)
   (evil-leader/set-key "F" 'counsel-recentf)
   (evil-leader/set-key "b" 'ivy-switch-buffer)
-  (evil-leader/set-key "p" 'counsel-projectile)
+  (evil-leader/set-key "pp" 'counsel-projectile-switch-project)
+  (evil-leader/set-key "pf" 'counsel-projectile-find-file)
+  (evil-leader/set-key "pd" 'counsel-projectile-find-dir)
+  (evil-leader/set-key "ps" 'counsel-projectile-rg)
+  (evil-leader/set-key "pb" 'counsel-projectile-switch-to-buffer)
   (evil-leader/set-key "a" 'org-agenda)
   (evil-leader/set-key "s" 'save-buffer)
   (evil-leader/set-key "e" 'eshell)
@@ -187,7 +192,7 @@
     (define-key company-active-map [tab] 'company-select-next)
     (define-key company-active-map (kbd "TAB") 'company-select-next)
     (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-    (setq company-idle-delay 0.2)))
+    (setq company-idle-delay 0.3)))
 
 (defun setup-cpp ()
   (use-package cc-mode
@@ -217,9 +222,16 @@
     :init (setup-eshell))
   (setq comint-prompt-read-only t)
   (setq comint-process-echoes t)
+  (setq comint-buffer-maximum-size 2048)
+  (add-hook 'shell-mode-hook 'setup-hist-hook)
+  (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
   (define-key comint-mode-map (kbd "C-j") 'comint-next-input)
   (define-key comint-mode-map (kbd "C-k") 'comint-previous-input)
   (define-key comint-mode-map (kbd "C-r") 'counsel-shell-history))
+
+(defun setup-hist-hook ()
+  (setq comint-input-ring-file-name "~/.histfile")
+  (comint-read-input-ring t))
 
 (defun setup-eshell ()
   (setq
@@ -392,7 +404,14 @@
   (winner-mode 1)
   (global-subword-mode)
   (setq enable-recursive-minibuffers t)
+  (setup-parens)
+  (add-hook 'prog-mode-hook 'electric-pair-mode)
   (setup-smooth-scrolling))
+
+(defun setup-parens ()
+  (use-package highlight-parentheses
+    :config
+    (add-hook 'prog-mode-hook 'highlight-parentheses-mode)))
 
 (defun setup-smooth-scrolling ()
   (use-package smooth-scrolling
