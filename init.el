@@ -35,10 +35,12 @@
 (defun setup-smart-modeline ()
   (use-package smart-mode-line
     :init
+    (setq display-time-default-load-average nil)
+    (setq display-time-24hr-format t)
     (display-time-mode 1)
-    (display-battery-mode)
-    (setq display-time-day-and-date t)
+    ; (display-battery-mode)
     (setq rm-whitelist " #")
+    (setq evil-mode-line-format nil)
     (add-hook 'prog-mode-hook 'column-number-mode)
     (setq sml/theme 'respectful)
     (setq sml/no-confirm-load-theme t)
@@ -427,7 +429,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (monokai-theme counsel flycheck-rust cargo flycheck-irony flycheck-google-cpplint company-irony evil-magit elpy smooth-scrolling yasnippet writeroom-mode use-package smart-mode-line popwin magit linum-relative key-chord helm-projectile helm-circe haskell-mode eyebrowse evil-leader evil-escape evil-commentary dracula-theme company))))
+    (restclient pyenv-mode monokai-theme counsel flycheck-rust cargo flycheck-irony flycheck-google-cpplint company-irony evil-magit elpy smooth-scrolling yasnippet writeroom-mode use-package smart-mode-line popwin magit linum-relative key-chord helm-projectile helm-circe haskell-mode eyebrowse evil-leader evil-escape evil-commentary dracula-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
